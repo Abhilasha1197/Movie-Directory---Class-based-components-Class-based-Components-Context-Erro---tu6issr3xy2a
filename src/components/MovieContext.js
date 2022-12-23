@@ -1,4 +1,5 @@
-
+import React from "react"
+export const MovieContex = React.createContext();
 
 const moviesList = [
   {
@@ -33,3 +34,27 @@ const moviesList = [
   },
 ]
 
+class MovieProvider extends React.Component{
+  constructor(props){ 
+    super(props);
+    this.state = {
+      movies : moviesList,
+      selectedMovieId : -1,
+      changeSelectedMovieId : ()=>{},
+    }
+  }
+
+  render(){
+    return (
+      <MovieContex.Provider value={{
+        movies : this.state.movies,
+        selectedMovieId : this.state.selectedMovieId,
+        setState : this.setState.bind(this),
+      }}>
+        {this.props.children}
+      </MovieContex.Provider>
+    )
+  }
+}
+
+export default MovieProvider;
